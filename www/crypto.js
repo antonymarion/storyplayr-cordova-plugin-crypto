@@ -7,10 +7,10 @@ module.exports = {
     encrypt: function (inputString, key, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "Crypto", "encrypt", [inputString, key]);
     },
-    decryptFile: function (path, key, successCallback, errorCallback) {
-        cordova.exec(successCallback, errorCallback, "Crypto", "decryptFile", [path, key]);
+    decryptFile: function (sourcePath, targetPath, key, successCallback, errorCallback) {
+        cordova.exec(successCallback, errorCallback, "Crypto", "decryptFile", [sourcePath, targetPath, key]);
     },
-    encryptFile: function (path, key, successCallback, errorCallback) {
-        cordova.exec(successCallback, errorCallback, "Crypto", "encryptFile", [path, key]);
+    encryptFile: function (sourcePath, targetPath, key, successCallback, errorCallback) {
+        cordova.exec(successCallback, errorCallback, "Crypto", "encryptFile", [sourcePath, targetPath, key]);
     }
 };

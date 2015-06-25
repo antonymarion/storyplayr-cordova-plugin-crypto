@@ -16,11 +16,11 @@ public class CryptoPlugin extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
 
-        String key = data.getString(1);
         if (action.equals("encrypt")) {
 
             try {
                 String inputString = data.getString(0);
+                String key = data.getString(1);
                 String result = Crypto.cryptoString(Cipher.ENCRYPT_MODE, key, inputString);
                 callbackContext.success(result);
                 return true;
@@ -36,6 +36,7 @@ public class CryptoPlugin extends CordovaPlugin {
 
             try {
                 String inputString = data.getString(0);
+                String key = data.getString(1);
                 String result = Crypto.cryptoString(Cipher.DECRYPT_MODE, key, inputString);
                 callbackContext.success(result);
                 return true;
@@ -50,16 +51,20 @@ public class CryptoPlugin extends CordovaPlugin {
         if (action.equals("encryptFile")) {
 
             try {
-                String path = data.getString(0);
-                Log.d("CryptoPlugin",  path);
+                String sourcePath = data.getString(0);
+                String targetPath = data.getString(1);
+                String key = data.getString(2);
 
                 CordovaResourceApi resourceApi = webView.getResourceApi();
-                Uri tmpSrc = Uri.parse(path);
+                Uri tmpSrc = Uri.parse(sourcePath);
                 Uri sourceUri = resourceApi.remapUri(
-                        tmpSrc.getScheme() != null ? tmpSrc : Uri.fromFile(new File(path)));
-
+                  tmpSrc.getScheme() != null ? tmpSrc : Uri.fromFile(new File(sourcePath)));
                 File sourceFile = new File(sourceUri.getPath());
-                File targetFile = new File(sourceUri.getPath() + "xxx");
+                
+                tmpSrc = Uri.parse(targetPath);
+                Uri targetUri = resourceApi.remapUri(
+                        tmpSrc.getScheme() != null ? tmpSrc : Uri.fromFile(new File(targetPath)));
+                File targetFile = new File(targetUri.getPath());
 
                 Crypto.cryptoFile(Cipher.ENCRYPT_MODE, key, sourceFile, targetFile);
                 callbackContext.success("ok");
@@ -76,16 +81,20 @@ public class CryptoPlugin extends CordovaPlugin {
         if (action.equals("decryptFile")) {
 
             try {
-                String path = data.getString(0);
-                Log.d("CryptoPlugin",  path);
+                String sourcePath = data.getString(0);
+                String targetPath = data.getString(1);
+                String key = data.getString(2);
 
                 CordovaResourceApi resourceApi = webView.getResourceApi();
-                Uri tmpSrc = Uri.parse(path);
+                Uri tmpSrc = Uri.parse(sourcePath);
                 Uri sourceUri = resourceApi.remapUri(
-                        tmpSrc.getScheme() != null ? tmpSrc : Uri.fromFile(new File(path)));
-
+                  tmpSrc.getScheme() != null ? tmpSrc : Uri.fromFile(new File(sourcePath)));
                 File sourceFile = new File(sourceUri.getPath());
-                File targetFile = new File(sourceUri.getPath() + "yyy");
+                
+                tmpSrc = Uri.parse(targetPath);
+                Uri targetUri = resourceApi.remapUri(
+                        tmpSrc.getScheme() != null ? tmpSrc : Uri.fromFile(new File(targetPath)));
+                File targetFile = new File(targetUri.getPath());
 
                 Crypto.cryptoFile(Cipher.DECRYPT_MODE, key, sourceFile, targetFile);
                 callbackContext.success("ok");
