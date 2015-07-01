@@ -9,10 +9,11 @@
     <engine name="cordova" version=">=3.4.0"/>
   </engines>
 
+  <!-- indique à cordova ce qu'il faut faire pour le build -->
   <asset src="www/crypto.js" target="js/crypto.js"/>
 
   <js-module src="www/crypto.js" name="crypto">
-    <clobbers target="crypto" />
+    <clobbers target="storyplayrcrypto" /> <!-- indique la variable d'acces au plugin -->
   </js-module>
 
   <platform name="android">
@@ -23,25 +24,35 @@
       </feature>
     </config-file>
 
+	<!-- indique à cordova ce qu'il faut faire pour le build -->
     <source-file src="src/android/src/com/storyplayr/cordova/CryptoPlugin.java" target-dir="src/com/storyplayr/cordova/"/>
     <source-file src="src/android/src/com/storyplayr/cordova/CryptoException.java" target-dir="src/com/storyplayr/cordova/"    />
-      <source-file src="src/android/src/com/storyplayr/cordova/Crypto.java" target-dir="src/com/storyplayr/cordova/"/>
+    <source-file src="src/android/src/com/storyplayr/cordova/Crypto.java" target-dir="src/com/storyplayr/cordova/"/>
+    
   </platform>
 
-  <!--platform name="ios">
-    
-    <config-file target="config.xml" parent="/widget">
-      <feature name="Hello">
-        <param name="ios-package" value="HWPHello" />
+  <platform name="ios">
+    <config-file parent="/*" target="config.xml">
+      <feature name="Crypto">
+        <param name="ios-package" value="Crypto"/>
       </feature>
     </config-file>
-
-    <header-file src="src/ios/HWPHello.h" target-dir="HelloPlugin"/>
-    <source-file src="src/ios/HWPHello.m" target-dir="HelloPlugin"/>
-  </platform-->
-
-  <!--platform name="wp7">
-    <source-file src="src/wp7/Hello.cs"/>
-  </platform-->
+    
+    <framework src="Foundation.framework" />
+    <framework src="Security.framework" />
+    
+    <source-file src="src/ios/Crypto.m"/>
+    <header-file src="src/ios/Crypto.h"/>
+    <header-file src="src/ios/RNCryptor/RNCryptor+Private.h" />
+    <header-file src="src/ios/RNCryptor/RNCryptor-Prefix.pch" />
+    <header-file src="src/ios/RNCryptor/RNCryptor.h" />
+    <source-file src="src/ios/RNCryptor/RNCryptor.m" />
+    <header-file src="src/ios/RNCryptor/RNCryptorEngine.h" />
+    <source-file src="src/ios/RNCryptor/RNCryptorEngine.m" />
+    <header-file src="src/ios/RNCryptor/RNDecryptor.h" />
+    <source-file src="src/ios/RNCryptor/RNDecryptor.m" />
+    <header-file src="src/ios/RNCryptor/RNEncryptor.h" />
+    <source-file src="src/ios/RNCryptor/RNEncryptor.m" />
+  </platform>
 
 </plugin>
