@@ -1,6 +1,7 @@
 package com.storyplayr.cordova;
 
 import android.util.Base64;
+import android.util.Log;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -11,6 +12,8 @@ import java.security.Key;
 
 public class Crypto {
 
+
+    private static final String TAG = "Crypto";
     private static final String ALGORITHM = "AES";
     private static final String TRANSFORMATION = "AES";
 
@@ -39,30 +42,31 @@ public class Crypto {
 
     public static String cryptoString(int cipherMode, String key, String inputString) throws CryptoException {
         try {
-
+            
             Key secretKey = new SecretKeySpec(key.getBytes(), ALGORITHM);
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
             cipher.init(cipherMode, secretKey);
-
             byte[] input;
+
             if(cipherMode == Cipher.DECRYPT_MODE) {
                 input = android.util.Base64.decode(inputString, Base64.DEFAULT);
             }
             else {
-                input = inputString.getBytes();
+                Log.v(TAG, "input: " + inputString);
+                Log.v(TAG, "input length: " + inputString.length());
+                input = inputString.getBytes(java.nio.charset.StandardCharsets.UTF_8);
             }
 
-            byte[] output = new byte[cipher.getOutputSize(input.length)];
-            int size = cipher.update(input, 0, input.length, output, 0);
-            size += cipher.doFinal(output, size);
+            byte[] output = cipher.doFinal(input);
             if(cipherMode == Cipher.ENCRYPT_MODE) {
                 return android.util.Base64.encodeToString(output, Base64.DEFAULT);
             }
             else {
-                return new String(output);
+                String result = new String(output, java.nio.charset.StandardCharsets.UTF_8);
+                Log.v(TAG, "result: " + result);
+                Log.v(TAG, "result length: " + result.length());
+                return result;
             }
-
-
         } catch (Exception ex) {
             throw new CryptoException("Error encrypting/decrypting string", ex);
         }
