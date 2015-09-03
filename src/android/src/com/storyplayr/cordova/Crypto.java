@@ -54,7 +54,7 @@ public class Crypto {
             else {
                 Log.v(TAG, "input: " + inputString);
                 Log.v(TAG, "input length: " + inputString.length());
-                input = inputString.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+                input = inputString.getBytes("UTF-8");
             }
 
             byte[] output = cipher.doFinal(input);
@@ -62,7 +62,7 @@ public class Crypto {
                 return android.util.Base64.encodeToString(output, Base64.DEFAULT);
             }
             else {
-                String result = new String(output, java.nio.charset.StandardCharsets.UTF_8);
+                String result = new String(output, "UTF-8");
                 Log.v(TAG, "result: " + result);
                 Log.v(TAG, "result length: " + result.length());
                 return result;
