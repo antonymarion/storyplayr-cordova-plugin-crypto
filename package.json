@@ -1,0 +1,44 @@
+{
+  "name": "storyplayr-cordova-plugin-crypto",
+  "version": "1.0.0",
+  "description": "storyplayr-cordova-plugin-crypto",
+  "cordova": {
+    "id": "storyplayr-cordova-plugin-crypto",
+    "platforms": [
+      "android",
+      "amazon-fireos",
+      "ubuntu",
+      "ios",
+      "blackberry10",
+      "wp7",
+      "wp8",
+      "windows8",
+      "windows",
+      "tizen"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antonymarion/storyplayr-cordova-plugin-crypto"
+  },
+  "keywords": [
+    "cordova",
+    "media",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-amazon-fireos",
+    "cordova-ubuntu",
+    "cordova-ios",
+    "cordova-blackberry10",
+    "cordova-wp7",
+    "cordova-wp8",
+    "cordova-windows8",
+    "cordova-windows",
+    "cordova-tizen"
+  ],
+  "peerDependencies": {
+    "cordova-plugin-file": ">=2.0.0"
+  },
+  "author": "Apache Software Foundation",
+  "license": "Apache 2.0"
+}
